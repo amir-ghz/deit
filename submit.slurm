@@ -1,19 +1,16 @@
 #!/bin/bash
-
-#SBATCH --time=00:15:00
+#SBATCH --time=01:00:00
+#SBATCH --nodes=2 
+#SBATCH --gres=gpu:4 
+#SBATCH --ntasks-per-node=1 
+#SBATCH --ntask=1 
+#SBATCH --output=logs.out 
+#SBATCH --gres-flags=enforce-binding
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-task=2
 #SBATCH --output=pytorch-super_resolution-slurm-%J.out
-#SBATCH --job-name=pytorch-superres-example
+#SBATCH --job-name=deit
 
-# Give this process 1 task and 1 GPU, then assign four CPUs per task
-# (so 4 cores overall).  
-
-# If you want two GPUs:
-# #SBATCH --gres=gpu:2
-# #SBATCH --cpus-per-task=8
-# This example, however, only uses one GPU.
 
 
 # Output some preliminaries before we begin
