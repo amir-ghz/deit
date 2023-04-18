@@ -23,31 +23,23 @@ NUM_GPUS=`echo $GPU_DEVICE_ORDINAL | tr ',' '\n' | wc -l`
 echo "You were assigned $NUM_GPUS gpu(s)"
 
 # Load the Python and CUDA modules
-module load python/python-3.8.0-gcc-9.1.0
-module load cuda/cuda-10.2
+module load anaconda/anaconda3
+module load cuda/cuda-11.6
 
 # List the modules that are loaded
 module list
 
 # Have Nvidia tell us the GPU/CPU mapping so we know
 nvidia-smi topo -m
-
 echo
-
-# Activate the GPU version of PyTorch
-source activate pytorch-1.8.0+cuda10_2
+source activate deit
 
 # Here we are going to run the PyTorch super_resolution example from the PyTorch examples
 # GitHub Repository: https://github.com/pytorch/examples/tree/master/super_resolution
 
 # Run PyTorch Training
-echo "Training Start:"
-time python main.py --upscale_factor 3 --batchSize 4 --testBatchSize 100 --nEpochs 30 --lr 0.001 --cuda
-echo
-
-# Now we'll try it out by scaling up one of the testing images from the dataset
-echo "Super Resolve Start:"
-time python super_resolve.py --input_image dataset/BSDS300/images/test/16077.jpg --model model_epoch_30.pth --output_filename out.png --cuda
+echo "Training DeiT Start:"
+time srun --nodes=2 --gres=gpu:4 --ntasks-per-node=1 --ntask=1 --output=logs.out --gres-flags=enforce-binding python -m torch.distributed.launch --nproc_per_node=4 --use_env main.py --model deit_tiny_patch16_224 --batch-size 256 --data-path /datasets/ImageNet2012nonpub --output_dir checkpoint/deit_tiny
 echo
 
 # You're done!
