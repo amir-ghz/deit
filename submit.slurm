@@ -35,7 +35,7 @@ source activate deit
 
 # Run PyTorch Training
 echo "Training DeiT Start:"
-time srun python -m torch.distributed.launch --nproc_per_node=4 --use_env main.py --model deit_tiny_patch16_224 --batch-size 256 --data-path /datasets/ImageNet2012nonpub --output_dir checkpoint/deit_tiny
+time srun --nodes=1 --gres=gpu:2 --ntasks=per-node=1 --output=deit.out python -m torch.distributed.launch --nproc_per_node=4 --use_env main.py --model deit_tiny_patch16_224 --batch-size 256 --data-path /datasets/ImageNet2012nonpub --output_dir checkpoint/deit_tiny
 echo
 
 # You're done!
