@@ -1,14 +1,13 @@
 #!/bin/bash
 #SBATCH --time=01:00:00
-#SBATCH --nodes=2 
-#SBATCH --gres=gpu:4 
-#SBATCH --ntasks-per-node=2 
-#SBATCH --ntasks=2 
+#SBATCH --nodes=1 
+#SBATCH --gres=gpu:2 
+#SBATCH --ntasks-per-node=1 
+#SBATCH --ntasks=1 
 #SBATCH --output=logs.out 
 #SBATCH --gres-flags=enforce-binding
-#SBATCH --ntasks=2
 #SBATCH --cpus-per-task=2
-#SBATCH --output=pytorch-super_resolution-slurm-%J.out
+#SBATCH --output=deit-%J.out
 #SBATCH --job-name=deit
 
 
@@ -36,7 +35,7 @@ source activate deit
 
 # Run PyTorch Training
 echo "Training DeiT Start:"
-time srun --nodes=2 --gres=gpu:4 --ntasks-per-node=1 --ntask=1 --output=logs.out --gres-flags=enforce-binding python -m torch.distributed.launch --nproc_per_node=4 --use_env main.py --model deit_tiny_patch16_224 --batch-size 256 --data-path /datasets/ImageNet2012nonpub --output_dir checkpoint/deit_tiny
+time srun python -m torch.distributed.launch --nproc_per_node=4 --use_env main.py --model deit_tiny_patch16_224 --batch-size 256 --data-path /datasets/ImageNet2012nonpub --output_dir checkpoint/deit_tiny
 echo
 
 # You're done!
