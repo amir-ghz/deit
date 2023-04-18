@@ -2,11 +2,11 @@
 #SBATCH --time=01:00:00
 #SBATCH --nodes=2 
 #SBATCH --gres=gpu:4 
-#SBATCH --ntasks-per-node=1 
-#SBATCH --ntasks=1 
+#SBATCH --ntasks-per-node=2 
+#SBATCH --ntasks=2 
 #SBATCH --output=logs.out 
 #SBATCH --gres-flags=enforce-binding
-#SBATCH --ntasks=1
+#SBATCH --ntasks=2
 #SBATCH --cpus-per-task=2
 #SBATCH --output=pytorch-super_resolution-slurm-%J.out
 #SBATCH --job-name=deit
