@@ -3,7 +3,7 @@
 #SBATCH --nodes=2 
 #SBATCH --gres=gpu:4 
 #SBATCH --ntasks-per-node=1 
-#SBATCH --ntask=1 
+#SBATCH --ntasks=1 
 #SBATCH --output=logs.out 
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --ntasks=1
