@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --time=02:00:00
-#SBATCH --nodes=4
+#SBATCH --nodes=1
 #SBATCH --tasks-per-node=2  
 #SBATCH --gres=gpu:2 
-#SBATCH --ntasks=8 
+#SBATCH --ntasks=2 
 #SBATCH --output=logs.out 
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --cpus-per-task=2
@@ -30,11 +30,11 @@ nvidia-smi
 echo
 source activate /home/aghazizadeh/my-envs/torch
 
-time srun pip install submitit
+time srun 
 
 # Run PyTorch Training
 echo "Training DeiT Start:"
-time srun python run_with_submitit.py --model deit_tiny_patch16_224 --batch-size 256 --data-path /datasets/ImageNet2012nonpub
+time srun python -m torch.distributed.launch --nproc_per_node=2 --use_env main.py --model deit_tiny_patch16_224 --batch-size 1024 --data-path /datasets/ImageNet2012nonpub --output_dir checkpoint/deit_tiny
 echo
 
 # You're done!
