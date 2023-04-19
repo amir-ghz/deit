@@ -28,7 +28,7 @@ module list
 # Have Nvidia tell us the GPU/CPU mapping so we know
 nvidia-smi topo -m
 echo
-source activate /home/aghazizadeh/my-envs/torch
+source torch
 
 # Run PyTorch Training
 echo "Training DeiT Start:"
