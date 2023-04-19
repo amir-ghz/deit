@@ -2,8 +2,8 @@
 #SBATCH --time=02:00:00
 #SBATCH --nodes=4
 #SBATCH --ntasks-per-node=2  
-#SBATCH --gres=gpu:8 
-#SBATCH --ntasks=16 
+#SBATCH --gres=gpu:2 
+#SBATCH --ntasks=8 
 #SBATCH --output=logs.out 
 #SBATCH --gres-flags=enforce-binding
 #SBATCH --cpus-per-task=2
