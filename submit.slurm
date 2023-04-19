@@ -34,7 +34,7 @@ time srun
 
 # Run PyTorch Training
 echo "Training DeiT Start:"
-time srun python -m torch.distributed.launch --nproc_per_node=2 --use_env main.py --model deit_tiny_patch16_224 --batch-size 1024 --data-path /datasets/ImageNet2012nonpub --output_dir checkpoint/deit_tiny
+time srun python -m torch.distributed.launch --nproc_per_node=2 --use_env main.py --model deit_tiny_patch16_224 --batch-size 512 --data-path /datasets/ImageNet2012nonpub --output_dir checkpoint/deit_tiny
 echo
 
 # You're done!
