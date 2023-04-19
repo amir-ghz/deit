@@ -32,6 +32,7 @@ source activate /home/aghazizadeh/my-envs/torch
 
 # Run PyTorch Training
 echo "Training DeiT Start:"
+time srun pip install torch
 time srun python -m torch.distributed.launch --nproc_per_node=8 --use_env main.py --model deit_tiny_patch16_224 --batch-size 256 --data-path /datasets/ImageNet2012nonpub --output_dir checkpoint/deit_tiny
 echo
 
