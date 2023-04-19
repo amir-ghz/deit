@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --time=02:00:00
 #SBATCH --nodes=4
-#SBATCH --ntasks-per-node=2  
+#SBATCH --tasks-per-node=2  
 #SBATCH --gres=gpu:2 
 #SBATCH --ntasks=8 
 #SBATCH --output=logs.out 
@@ -25,14 +25,16 @@ module load cuda/cuda-11.6
 # List the modules that are loaded
 module list
 
-# Have Nvidia tell us the GPU/CPU mapping so we know
-nvidia-smi topo -m
+
+nvidia-smi
 echo
 source activate /home/aghazizadeh/my-envs/torch
 
+time srun pip install submitit
+
 # Run PyTorch Training
 echo "Training DeiT Start:"
-time srun python -m torch.distributed.launch --nproc_per_node=2 --use_env main.py --model deit_tiny_patch16_224 --batch-size 512 --data-path /datasets/ImageNet2012nonpub --output_dir checkpoint/deit_tiny
+time srun python run_with_submitit.py --model deit_tiny_patch16_224 --batch-size 256 --data-path /datasets/ImageNet2012nonpub
 echo
 
 # You're done!
